@@ -1,0 +1,236 @@
+{
+  "sample": {
+    "train": {
+      "n": 10495,
+      "bads": 1210,
+      "bad_rate": 0.1153
+    },
+    "test": {
+      "n": 4499,
+      "bads": 518,
+      "bad_rate": 0.1151
+    },
+    "oot": {
+      "n": 14101,
+      "bads": 1499,
+      "bad_rate": 0.1063
+    },
+    "waterfall": [
+      {
+        "step": 1,
+        "rule": "All loans in file",
+        "n": 42535
+      },
+      {
+        "step": 2,
+        "rule": "36-month term",
+        "n": 31534
+      },
+      {
+        "step": 3,
+        "rule": "Met credit policy (36-month)",
+        "n": 29096
+      },
+      {
+        "step": 4,
+        "rule": "Resolved outcome: Fully Paid / Charged Off / Default",
+        "n": 29095
+      }
+    ]
+  },
+  "discrimination": {
+    "train": {
+      "auc": 0.6549,
+      "gini": 0.3098,
+      "ks": 0.2129
+    },
+    "test": {
+      "auc": 0.6485,
+      "gini": 0.297,
+      "ks": 0.2331
+    },
+    "oot": {
+      "auc": 0.6472,
+      "gini": 0.2945,
+      "ks": 0.221
+    },
+    "oot_rank_ordering_monotonic": false
+  },
+  "calibration": {
+    "train": {
+      "mean_predicted_pd": 0.1149,
+      "observed_bad_rate": 0.1153,
+      "brier": 0.0984,
+      "hosmer_lemeshow_chi2": 10.49,
+      "hosmer_lemeshow_p": 0.2324
+    },
+    "test": {
+      "mean_predicted_pd": 0.1163,
+      "observed_bad_rate": 0.1151,
+      "brier": 0.0994,
+      "hosmer_lemeshow_chi2": 25.36,
+      "hosmer_lemeshow_p": 0.0014
+    },
+    "oot": {
+      "mean_predicted_pd": 0.1091,
+      "observed_bad_rate": 0.1063,
+      "brier": 0.0926,
+      "hosmer_lemeshow_chi2": 16.89,
+      "hosmer_lemeshow_p": 0.0313
+    }
+  },
+  "stability": {
+    "score_psi_train_vs_test": 0.0035,
+    "score_psi_train_vs_oot": 0.0129,
+    "characteristic_psi_train_vs_oot": {
+      "purpose": 0.0231,
+      "revol_util": 0.0119,
+      "inq_last_6mths": 0.014,
+      "pti": 0.005,
+      "annual_inc": 0.0007
+    }
+  },
+  "benchmark": {
+    "train": {
+      "scorecard_gini": 0.3098,
+      "lc_subgrade_gini": 0.289,
+      "gbm_challenger_gini": 0.5681
+    },
+    "test": {
+      "scorecard_gini": 0.297,
+      "lc_subgrade_gini": 0.26,
+      "gbm_challenger_gini": 0.2957
+    },
+    "oot": {
+      "scorecard_gini": 0.2945,
+      "lc_subgrade_gini": 0.2702,
+      "gbm_challenger_gini": 0.2953
+    },
+    "oot_bootstrap_vs_lc_subgrade": {
+      "gini_a_ci": [
+        0.2628,
+        0.3246
+      ],
+      "gini_b_ci": [
+        0.2392,
+        0.2978
+      ],
+      "diff": 0.0247,
+      "diff_ci": [
+        -0.0083,
+        0.0562
+      ],
+      "share_diff_positive": 0.932
+    },
+    "oot_bootstrap_gbm_vs_scorecard": {
+      "gini_a_ci": [
+        0.2661,
+        0.3256
+      ],
+      "gini_b_ci": [
+        0.2628,
+        0.3246
+      ],
+      "diff": 0.0011,
+      "diff_ci": [
+        -0.0186,
+        0.021
+      ],
+      "share_diff_positive": 0.536
+    }
+  },
+  "model": {
+    "features": [
+      "purpose",
+      "revol_util",
+      "inq_last_6mths",
+      "pti",
+      "annual_inc"
+    ],
+    "coefficients": {
+      "const": -2.039,
+      "purpose": -1.0185,
+      "revol_util": -1.1515,
+      "inq_last_6mths": -1.0532,
+      "pti": -0.779,
+      "annual_inc": -0.7668
+    },
+    "p_values": {
+      "const": 0.0,
+      "purpose": 7.6e-26,
+      "revol_util": 4.38e-21,
+      "inq_last_6mths": 7.8e-20,
+      "pti": 7.38e-10,
+      "annual_inc": 4.33e-05
+    },
+    "vif": {
+      "purpose": 1.01,
+      "revol_util": 1.01,
+      "inq_last_6mths": 1.01,
+      "pti": 1.14,
+      "annual_inc": 1.13
+    },
+    "eliminated": [],
+    "candidates": 17,
+    "passed_iv": [
+      "purpose",
+      "revol_util",
+      "inq_last_6mths",
+      "pti",
+      "annual_inc"
+    ],
+    "after_correlation": [
+      "purpose",
+      "revol_util",
+      "inq_last_6mths",
+      "pti",
+      "annual_inc"
+    ],
+    "score_scaling": {
+      "base_score": 600,
+      "base_odds": 50,
+      "pdo": 20
+    },
+    "score_range": [
+      458,
+      589
+    ]
+  },
+  "robustness_other_splits": [
+    {
+      "seed": 1,
+      "test_gini": 0.2608,
+      "oot_gini": 0.2868,
+      "test_hl_p": 0.0622,
+      "oot_hl_p": 0.0161
+    },
+    {
+      "seed": 2,
+      "test_gini": 0.2914,
+      "oot_gini": 0.3024,
+      "test_hl_p": 0.2543,
+      "oot_hl_p": 0.023
+    },
+    {
+      "seed": 3,
+      "test_gini": 0.3544,
+      "oot_gini": 0.2915,
+      "test_hl_p": 0.1258,
+      "oot_hl_p": 0.0536
+    },
+    {
+      "seed": 4,
+      "test_gini": 0.2905,
+      "oot_gini": 0.2897,
+      "test_hl_p": 0.2186,
+      "oot_hl_p": 0.055
+    },
+    {
+      "seed": 5,
+      "test_gini": 0.2821,
+      "oot_gini": 0.3003,
+      "test_hl_p": 0.1132,
+      "oot_hl_p": 0.1386
+    }
+  ]
+}
